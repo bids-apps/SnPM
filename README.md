@@ -18,9 +18,9 @@ $ docker run <yourhandle>/spm12 bids_dir output_dir level [--participant_label P
 
 ## Error Reporting
 
-If you have a specific problem with the SPM BIDS App, please open an [issue](https://github.com/BIDS-Apps/SnPM/issues) on GitHub.
+If you have a specific problem with the SnPM BIDS App, please open an [issue](https://github.com/BIDS-Apps/SnPM/issues) on GitHub.
 
-If your issue concerns SPM more generally, please use the [SnPM mailing list](https://groups.google.com/forum/#!forum/snpm-support)
+If your issue concerns SnPM more generally, please use the [SnPM mailing list](https://groups.google.com/forum/#!forum/snpm-support)
 
 ## Acknowledgement
 
