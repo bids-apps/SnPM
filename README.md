@@ -1,6 +1,6 @@
-# SPM BIDS App
+# SnPM BIDS App
 
-BIDS App containing an instance of the [SPM12 software](http://www.fil.ion.ucl.ac.uk/spm/).
+BIDS App containing an instance of the [SnPM software](https://github.com/SnPM-toolbox/SnPM-devel).
 
 ## Documentation
 
@@ -18,20 +18,10 @@ $ docker run <yourhandle>/spm12 bids_dir output_dir level [--participant_label P
 
 ## Error Reporting
 
-If you have a specific problem with the SPM BIDS App, please open an [issue](https://github.com/BIDS-Apps/SPM/issues) on GitHub.
+If you have a specific problem with the SPM BIDS App, please open an [issue](https://github.com/BIDS-Apps/SnPM/issues) on GitHub.
 
-If your issue concerns SPM more generally, please use the [SPM mailing list](https://www.jiscmail.ac.uk/cgi-bin/webadmin?A0=spm)
+If your issue concerns SPM more generally, please use the [SnPM mailing list](https://groups.google.com/forum/#!forum/snpm-support)
 
 ## Acknowledgement
 
 Please refer to:
-
-```
-@Book{spm,
-  editor = {K.J. Friston and J. Ashburner and S.J. Kiebel and T.E. Nichols and W.D. Penny},
-  title = {Statistical Parametric Mapping: The Analysis of Functional Brain Images},
-  publisher = {Academic Press},
-  year = {2007},
-  url = {http://store.elsevier.com/product.jsp?isbn=9780123725608} 
-}
-```
