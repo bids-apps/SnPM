@@ -28,9 +28,9 @@ ENV SPM_VERSION 12
 ENV SPM_REVISION r7103
 ENV SPM_DIR /opt/spm${SPM_VERSION}
 ENV SPM_EXEC ${SPM_DIR}/spm${SPM_VERSION}
-RUN wget -P /opt http://www.fil.ion.ucl.ac.uk/spm/download/restricted/bids/spm${SPM_VERSION}_latest_BI_Linux_${MATLAB_VERSION}.zip && \
-    unzip -q /opt/spm${SPM_VERSION}_${SPM_REVISION}_Linux_${MATLAB_VERSION}.zip -d /opt && \
-    rm -f /opt/spm${SPM_VERSION}_${SPM_REVISION}_Linux_${MATLAB_VERSION}.zip && \
+RUN wget -P /opt http://www.fil.ion.ucl.ac.uk/spm/download/restricted/utopia/dev/spm${SPM_VERSION}_latest_BI_Linux_${MATLAB_VERSION}.zip && \
+    unzip -q /opt/spm${SPM_VERSION}_latest_BI_Linux_${MATLAB_VERSION}.zip -d /opt && \
+    rm -f /opt/spm${SPM_VERSION}_latest_BI_Linux_${MATLAB_VERSION}.zip && \
     ${SPM_EXEC} function exit
 
 # Configure SPM BIDS App entry point
