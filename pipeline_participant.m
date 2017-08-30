@@ -62,4 +62,6 @@ fprintf('Assuming the preprocessing are done - WIP')
 %==========================================================================
 %-First Level fMRI
 %==========================================================================
+spm_jsonread(BIDS_App.model)
+
 fprintf('Nothing to do at fMRI first level.\n');

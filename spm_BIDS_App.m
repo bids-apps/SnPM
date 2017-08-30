@@ -37,11 +37,12 @@ if numel(inputs) == 1
                 deblank(fileread('/version')));
         case {'-h','--help'}
             fprintf([...
-                'Usage: bids/spm BIDS_DIR OUTPUT_DIR LEVEL [OPTIONS]\n',...
+                'Usage: bids/spm BIDS_DIR BIDS_MODEL OUTPUT_DIR LEVEL [OPTIONS]\n',...
                 '       bids/spm [ -h | --help | -v | --version ]\n',...
                 '\n',...
                 'Mandatory inputs:\n',...
                 '    BIDS_DIR        Input directory following the BIDS standard\n',...
+                '    BIDS_MODEL      Input file following the BIDS-model standard\n',...
                 '    OUTPUT_DIR      Output directory\n',...
                 '    LEVEL           Level of the analysis that will be performed\n',...
                 '                    {participant,group}\n',...
@@ -70,10 +71,11 @@ elseif numel(inputs) < 3
 end
 
 BIDS_App.dir    = inputs{1};
-BIDS_App.outdir = inputs{2};
-BIDS_App.level  = inputs{3};
+BIDS_App.model  = inputs{2};
+BIDS_App.outdir = inputs{3};
+BIDS_App.level  = inputs{4};
 
-i = 4;
+i = 5;
 while i <= numel(inputs)
     arg = inputs{i};
     switch arg
@@ -106,6 +108,12 @@ end
 %--------------------------------------------------------------------------
 if ~exist(BIDS_App.dir,'dir')
 	error('BIDS directory "%s" does not exist.',BIDS_App.dir);
+end
+
+%- bids_model
+%--------------------------------------------------------------------------
+if ~exist(BIDS_App.model,'file')
+    error('BIDS-model file "%s" does not exist.',BIDS_App.dir);
 end
 
 %- level [participant/group] & output_dir
