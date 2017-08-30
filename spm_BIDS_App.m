@@ -197,43 +197,43 @@ atExit = '';
 BIDS_App.tmpdir = BIDS_App.dir;
 
 if strncmp('participant',BIDS_App.level,11) && ~isempty(BIDS_App.participants)
-    if BIDS_App.temp
-        %-Create temporary directory
-        %------------------------------------------------------------------
-        BIDS_App.tmpdir = BIDS_App.outdir;
-        %BIDS_App.tmpdir = tempname(BIDS_App.outdir);
-        %sts = mkdir(BIDS_App.tmpdir);
-        %if ~sts
-        %    error('Output temporary directory could not be created.');
-        %end
-        %atExit = onCleanup(@() rmdir(BIDS_App.tmpdir,'s'));
+    % if BIDS_App.temp
+    %     %-Create temporary directory
+    %     %------------------------------------------------------------------
+    %     BIDS_App.tmpdir = BIDS_App.outdir;
+    %     %BIDS_App.tmpdir = tempname(BIDS_App.outdir);
+    %     %sts = mkdir(BIDS_App.tmpdir);
+    %     %if ~sts
+    %     %    error('Output temporary directory could not be created.');
+    %     %end
+    %     %atExit = onCleanup(@() rmdir(BIDS_App.tmpdir,'s'));
         
-        %-Copy participants' data
-        %------------------------------------------------------------------
-        for s=1:numel(BIDS_App.participants)
-            %fprintf('Temporary directory: %s\n',...
-            %    fullfile(BIDS_App.tmpdir,BIDS_App.participants{s}));
-            sts = copyfile(fullfile(BIDS_App.dir,BIDS_App.participants{s}),...
-                fullfile(BIDS_App.tmpdir,BIDS_App.participants{s}));
-            if ~sts
-                error('Data could not be temporarily copied.');
-            end
-        end
-    end
+    %     %-Copy participants' data
+    %     %------------------------------------------------------------------
+    %     for s=1:numel(BIDS_App.participants)
+    %         %fprintf('Temporary directory: %s\n',...
+    %         %    fullfile(BIDS_App.tmpdir,BIDS_App.participants{s}));
+    %         sts = copyfile(fullfile(BIDS_App.dir,BIDS_App.participants{s}),...
+    %             fullfile(BIDS_App.tmpdir,BIDS_App.participants{s}));
+    %         if ~sts
+    %             error('Data could not be temporarily copied.');
+    %         end
+    %     end
+    % end
     
-    %-Uncompress gzipped NIfTI files
-    %----------------------------------------------------------------------
-    for s=1:numel(BIDS_App.participants)
-        niigz = spm_select('FPListRec',...
-            fullfile(BIDS_App.tmpdir,BIDS_App.participants{s}),'^.*\.nii\.gz$');
-        if ~isempty(niigz)
-            niigz = cellstr(niigz);
-            for i=1:numel(niigz)
-                gunzip(niigz{i});
-                delete(niigz{i});
-            end
-        end
-    end
+    % %-Uncompress gzipped NIfTI files
+    % %----------------------------------------------------------------------
+    % for s=1:numel(BIDS_App.participants)
+    %     niigz = spm_select('FPListRec',...
+    %         fullfile(BIDS_App.tmpdir,BIDS_App.participants{s}),'^.*\.nii\.gz$');
+    %     if ~isempty(niigz)
+    %         niigz = cellstr(niigz);
+    %         for i=1:numel(niigz)
+    %             gunzip(niigz{i});
+    %             delete(niigz{i});
+    %         end
+    %     end
+    % end
     
     %-Update BIDS structure to point to new local files
     %----------------------------------------------------------------------
