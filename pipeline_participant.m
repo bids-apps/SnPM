@@ -62,32 +62,39 @@ fprintf('Assuming the preprocessing are done - WIP')
 %==========================================================================
 %-First Level fMRI
 %==========================================================================
-BIDS_model = spm_jsonread(BIDS_App.model)
-if ~isfield(BIDS_model, 'participant')
-	error('No model specification at the participant level.');
+BIDS_model = spm_jsonread(BIDS_App.model);
+
+if ~strcmp(BIDS_model.blocks{1}.level, 'participant')
+	error(['Do not handle ' BIDS_model.blocks{1}.level ' block yet!']);
 end
+
+level1_model = BIDS_model.blocks{1};
 
 % BIDS
 
 % BIDS.description
-dv = BIDS_model.participant.inputs.dependent_variable
-meta = spm_BIDS(BIDS,'metadata', 'modality','func', 'type','bold', 'task', dv)
-f = spm_BIDS(BIDS,'data', 'modality','func', 'type','bold', 'task', dv)
+dv = level1_model.inputs.dependent_variable;
+meta = spm_BIDS(BIDS,'metadata', 'modality','func', 'type','bold', 'task', dv);
+f = spm_BIDS(BIDS,'data', 'modality','func', 'type','bold', 'task', dv);
 
-% fid = find(~cellfun(@isempty,regexp({BIDS.subjects(1).func.task}, BIDS_model.participant.inputs.dependent_variable)))
+% fid = find(~cellfun(@isempty,regexp({BIDS.subjects(1).func.task}, level1_model.inputs.dependent_variable)))
 
 % Select the functional file
 matlabbatch{1}.spm.stats.fmri_spec.dir = fullfile(spm_file(f, 'path'), 'first');
 matlabbatch{1}.spm.stats.fmri_spec.timing.units = 'secs';
 matlabbatch{1}.spm.stats.fmri_spec.timing.RT = meta.RepetitionTime;
 
-event = tdfread(spm_BIDS(BIDS,'data', 'modality','func', 'type','events', 'task', 'fingerfootlips'))
-for i = 1:numel(BIDS_model.participant.transformations)
-	transfo = BIDS_model.participant.transformations(i)
-	transfotype = transfo.name
+event_file = spm_BIDS(BIDS,'data', 'modality','func', 'type','events', 'task', 'fingerfootlips');
+
+disp(event_file{1})
+
+event = tdfread(event_file{1})
+for i = 1:numel(level1_model.transformations)
+	TRANSFO = level1_model.transformations(i)
+	TRANSFO.events = event
 	switch(transfo.name)
 		case 'factor'
-			conditions = BIDS_transformations(transfo, event, transfo.name, transfo.input)
+			spm('Run', fullfile(fileparts(mfilename('fullpath')),'BIDS_transformations.m'));
 	end
 	
 end
@@ -98,24 +105,24 @@ matlabbatch{1}.spm.stats.fmri_spec.sess.cond = conditions
 fprintf('Nothing to do at fMRI first level.\n');
 
 
-% From the BIDS-models spec:
-% factor(input, prefix=None, constraint=?none?, ref_level=None)
-% The factor transformation converts a nominal/categorical variable with N 
-% unique levels to either N or N-1 binary indicators (i.e., dummy-coding).
-function conditions = BIDS_transformations(transfo, events, varargin)
-    switch(transfo)
-        case {'factor'}
-            input = varargin{1};
-            levels = unique(cellstr(events.(input)));
+% % From the BIDS-models spec:
+% % factor(input, prefix=None, constraint=?none?, ref_level=None)
+% % The factor transformation converts a nominal/categorical variable with N 
+% % unique levels to either N or N-1 binary indicators (i.e., dummy-coding).
+% function conditions = BIDS_transformations(transfo, events, varargin)
+%     switch(transfo)
+%         case {'factor'}
+%             input = varargin{1};
+%             levels = unique(cellstr(events.(input)));
             
-            conditions = struct();
-            for i = 1:numel(levels)
-                conditions(i).name = levels{i};
+%             conditions = struct();
+%             for i = 1:numel(levels)
+%                 conditions(i).name = levels{i};
                 
-                disp(levels{i});
-                ids = strmatch(levels{i}, cellstr(events.(input)));
-                conditions(i).onsets = events.onset(ids);
-                conditions(i).duration = events.duration(ids);
-            end
-    end
-end
+%                 disp(levels{i});
+%                 ids = strmatch(levels{i}, cellstr(events.(input)));
+%                 conditions(i).onsets = events.onset(ids);
+%                 conditions(i).duration = events.duration(ids);
+%             end
+%     end
+% end
