@@ -175,7 +175,7 @@ end
 %-Parse BIDS directory
 %--------------------------------------------------------------------------
 BIDS = spm_BIDS(BIDS_App.dir);
-spm('Run', fullfile(fileparts(mfilename('fullpath')),'spm_BIDS_update.m'));
+% spm('Run', fullfile(fileparts(mfilename('fullpath')),'spm_BIDS_update.m'));
 
 %- --participant_label
 %--------------------------------------------------------------------------
