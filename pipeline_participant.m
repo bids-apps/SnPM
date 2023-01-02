@@ -96,7 +96,7 @@ for i = 1:numel(level1_model.transformations)
 		case 'factor'
 			spm('Run', fullfile(fileparts(mfilename('fullpath')),'BIDS_transformations.m'));
 	end
-	
+
 end
 
 matlabbatch{1}.spm.stats.fmri_spec.sess.scans = spm_file(f, 'prefix','sw');
@@ -107,18 +107,18 @@ fprintf('Nothing to do at fMRI first level.\n');
 
 % % From the BIDS-models spec:
 % % factor(input, prefix=None, constraint=?none?, ref_level=None)
-% % The factor transformation converts a nominal/categorical variable with N 
+% % The factor transformation converts a nominal/categorical variable with N
 % % unique levels to either N or N-1 binary indicators (i.e., dummy-coding).
 % function conditions = BIDS_transformations(transfo, events, varargin)
 %     switch(transfo)
 %         case {'factor'}
 %             input = varargin{1};
 %             levels = unique(cellstr(events.(input)));
-            
+
 %             conditions = struct();
 %             for i = 1:numel(levels)
 %                 conditions(i).name = levels{i};
-                
+
 %                 disp(levels{i});
 %                 ids = strmatch(levels{i}, cellstr(events.(input)));
 %                 conditions(i).onsets = events.onset(ids);
