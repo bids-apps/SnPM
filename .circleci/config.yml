@@ -4,10 +4,14 @@ jobs:
 
 
   build:
+
     machine:
       image: ubuntu-2204:2022.10.2
+
     steps:
+
     - checkout
+
     - run:
         name: 'Get test data: ds114_test1'
         command: |
@@ -24,12 +28,18 @@ jobs:
           mkdir -p ${HOME}/docker
           docker save "bids/${CIRCLE_PROJECT_REPONAME,,}" > ~/docker/image.tar
           mkdir -p ${HOME}/outputs
+
     - persist_to_workspace:
         root: /home/circleci
         paths:
         - data/ds114_test1.tar
         - docker/image.tar
 
+    - save_cache:
+        key: my_cache
+        paths:
+        - ~/docker
+        - ~/data
 
   test:
 
@@ -39,7 +49,9 @@ jobs:
     steps:
     - attach_workspace:
         at: /tmp/workspace
-    - run: docker load -i /tmp/workspace/image.tar
+    - run:
+        command: |
+          docker load -i /tmp/workspace/docker/image.tar
 
     - run:
         name: participant 01
@@ -79,8 +91,8 @@ jobs:
     steps:
     - attach_workspace:
         at: /tmp/workspace
-
     - run: docker load -i /tmp/workspace/docker/image.tar
+
     - run:
         name: push to dockerhub
         command: |
