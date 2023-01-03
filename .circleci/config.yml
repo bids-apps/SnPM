@@ -60,8 +60,9 @@ jobs:
             -v /tmp:/tmp \
             -v /var/tmp:/var/tmp \
             -v ${HOME}/data/ds114_test1:/bids_dataset \
-            -v ${HOME}/outputs:/outputs bids/${CIRCLE_PROJECT_REPONAME,,} \
-            /bids_dataset /outputs participant --participant_label 01
+            -v ${HOME}/outputs:/outputs \
+              bids/${CIRCLE_PROJECT_REPONAME,,} \
+                /bids_dataset /outputs participant --participant_label 01
         no_output_timeout: 6h
     - run:
         name: participant 02
@@ -69,8 +70,9 @@ jobs:
           docker run -ti --rm --read-only -v /tmp:/tmp \
             -v /var/tmp:/var/tmp \
             -v ${HOME}/data/ds114_test1:/bids_dataset \
-            -v ${HOME}/outputs:/outputs bids/${CIRCLE_PROJECT_REPONAME,,} \
-            /bids_dataset /outputs participant --participant_label 02
+            -v ${HOME}/outputs:/outputs \
+              bids/${CIRCLE_PROJECT_REPONAME,,} \
+                /bids_dataset /outputs participant --participant_label 02
         no_output_timeout: 6h
     - run:
         name: group
@@ -79,8 +81,9 @@ jobs:
             -v /tmp:/tmp \
             -v /var/tmp:/var/tmp \
             -v ${HOME}/data/ds114_test1:/bids_dataset \
-            -v ${HOME}/outputs:/outputs bids/${CIRCLE_PROJECT_REPONAME,,} \
-            /bids_dataset /outputs group
+            -v ${HOME}/outputs:/outputs \
+              bids/${CIRCLE_PROJECT_REPONAME,,} \
+                /bids_dataset /outputs group
         no_output_timeout: 6h
 
 
