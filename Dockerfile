@@ -2,6 +2,8 @@ FROM bids/base_validator
 
 LABEL Guillaume Flandin <g.flandin@ucl.ac.uk>
 
+ARG DEBIAN_FRONTEND="noninteractive"
+
 # Update system
 RUN apt-get -qq update && apt-get -qq install -y \
     unzip \
